@@ -2,11 +2,10 @@
 <div id="map" class="Map"></div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script>
 import L from 'leaflet'
 
-export default defineComponent({
+export default {
   name: 'The Map',
 
   data() {
@@ -36,7 +35,7 @@ export default defineComponent({
   mounted() {
     this.initMap()
   }
-})
+}
 </script>
 
 <style>

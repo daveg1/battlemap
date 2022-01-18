@@ -9,21 +9,19 @@
 </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
+<script>
 import TheHeader from '@/components/TheHeader.vue'
 import TheMap from '@/components/map/TheMap.vue'
 import TheSidemenu from '@/components/sidemenu/TheSidemenu.vue'
 
-export default defineComponent({
+export default {
   name: 'Map',
   components: {
     TheHeader,
     TheMap,
     TheSidemenu,
   }
-})
+}
 </script>
 
 <style>

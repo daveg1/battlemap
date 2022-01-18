@@ -3,7 +3,8 @@
 ## TODO
 - Revamp the UI
 - Components for tile polygons
-- Remove Typescript (for now)
+- ~~Migrate from Typescript~~
+- Reimplement with TypeScript in future
 
 ## Project setup
 1. `npm i`

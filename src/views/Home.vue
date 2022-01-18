@@ -12,20 +12,19 @@
 </main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 import TheBrand from '@/components/TheBrand.vue';
 import TheHeader from '@/components/TheHeader.vue';
 import RouterButton from '@/components/controls/RouterButton.vue'
 
-export default defineComponent({
+export default {
   name: 'Home',
   components: {
     TheBrand,
     TheHeader,
     RouterButton
   },
-});
+}
 </script>
 
 <style>

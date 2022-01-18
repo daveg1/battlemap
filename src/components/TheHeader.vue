@@ -17,16 +17,15 @@
 </header>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 import TheBrand from './TheBrand.vue';
 
-export default defineComponent({
+export default {
   name: 'The Header',
   components: {
     TheBrand,
   },
-});
+}
 </script>
 
 <style>

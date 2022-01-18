@@ -12,16 +12,15 @@
   src="@/assets/brand/brand-static.png">
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
+<script>
+export default {
   name: 'TheBrand',
   props: {
     animated: {
       type: Boolean
     }
   }
-})
+}
 </script>
 
 <style>
