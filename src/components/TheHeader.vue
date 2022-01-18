@@ -2,7 +2,6 @@
 <header class="SiteHeader">
   <div class="SiteHeader__wrap">
     <div class="SiteHeader__start">
-      <TheBrand class="SiteHeader__Brand" />
       <nav class="SiteHeader__nav">
         <router-link class="SiteHeader__link" to="/">Home</router-link>
         <router-link class="SiteHeader__link" to="/map">Map</router-link>
@@ -69,9 +68,5 @@ export default defineComponent({
 
 .SiteHeader__link:hover {
   text-decoration: underline;
-}
-
-.SiteHeader__Brand {
-  margin-inline-end: 1rem;
 }
 </style>
