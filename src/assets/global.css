@@ -1,0 +1,43 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+:root {
+  --color-background: #fefefe;
+  --color-primary: #5c0a15;
+  --color-primary-alt: #571a1f;
+  --color-text: #fdfdfd;
+  --color-text-on-primary: #f9e8d2;
+
+  --val-wrap: 1200px;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: "segoe ui", arial, helvetica, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+#app {
+  inset: 0;
+  position: absolute;
+}
