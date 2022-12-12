@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { getCoords } from '../modules/OpenCage.js'
-import { Battle } from '../models/Battle.js'
-import { isWithinRadius } from '../modules/isWithinRadius.js'
+import { getCoords } from '../../modules/OpenCage.js'
+import { Battle, IBattle } from '../../models/Battle.js'
+import { isPointWithinRadius } from 'geolib'
 
 const mapRouter = Router()
 
@@ -21,12 +21,17 @@ mapRouter.post('/search-place', async (req, res) => {
 		if (queryCoords) {
 			// Get the battles from the DB.
 			const battles = await Battle.find()
-			const searchResults = []
+			const searchResults: IBattle[] = []
 
 			// Only grab the battles within the radius.
 			battles.forEach((battle) => {
-				const withinRadius = isWithinRadius(battle.coords, queryCoords, radius)
-				if (withinRadius) {
+				if (
+					isPointWithinRadius(
+						{ latitude: battle.coords.lat, longitude: battle.coords.lng },
+						{ latitude: queryCoords.lat, longitude: queryCoords.lng },
+						radius,
+					)
+				) {
 					searchResults.push(battle)
 				}
 			})
@@ -44,7 +49,7 @@ mapRouter.post('/search-place', async (req, res) => {
 		}
 	} catch (error) {
 		// Return json response with error message
-		res.json({ status: 'error', message: error.message })
+		res.json({ status: 'error', message: error })
 		console.error(error)
 	}
 })
@@ -61,7 +66,7 @@ mapRouter.post('/search-battle', async (req, res) => {
 		}
 	} catch (error) {
 		// Return json response with error message
-		res.json({ status: 'error', message: error.message })
+		res.json({ status: 'error', message: error })
 	}
 })
 

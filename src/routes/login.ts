@@ -1,11 +1,11 @@
 import { Router } from 'express'
-import { User } from '../models/User.js'
+import { User } from '../../models/User.js'
 
-const loginRouter = new Router()
+const loginRouter = Router()
 
 loginRouter.get('/', (req, res) => {
-	if (req.session.isLoggedIn) {
-		res.redirect(`/profile/${req.session.username}`)
+	if (req.session.activeUser) {
+		res.redirect(`/profile/${req.session.activeUser.username}`)
 	} else {
 		res.render('login', { session: req.session })
 	}
@@ -25,15 +25,17 @@ loginRouter.post('/', async (req, res) => {
 		)
 
 		if (user) {
-			req.session.username = user.username
-			req.session.isLoggedIn = true
+			req.session.activeUser = {
+				username: user.username,
+			}
+
 			res.json({ status: 'good' })
 		} else {
 			res.json({ status: 'bad', reason: 'Found no user with those credentials. Try again' })
 		}
 	} catch (error) {
 		console.error(error)
-		res.json({ status: 'error', message: error.message })
+		res.json({ status: 'error', message: error })
 	}
 })
 

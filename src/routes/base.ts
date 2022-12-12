@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { User } from '../models/User.js'
+import { User } from '../../models/User.js'
 
 const baseRouter = Router()
 
@@ -12,9 +12,8 @@ baseRouter.get('/about', (req, res) => {
 })
 
 baseRouter.get('/logout', (req, res) => {
-	if (req.session.isLoggedIn) {
-		delete req.session.isLoggedIn
-		delete req.session.username
+	if (req.session.activeUser) {
+		delete req.session.activeUser
 	}
 
 	res.redirect('/login')
@@ -27,7 +26,7 @@ baseRouter.post('/user-search', async (req, res) => {
 		const results = await User.find({ username: { $regex: regex } }, { password: 0, epithet: 0 })
 		res.json({ status: 'success', results })
 	} catch (error) {
-		res.json({ status: 'error', message: error.message })
+		res.json({ status: 'error', message: error })
 	}
 })
 

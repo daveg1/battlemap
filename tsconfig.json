@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"outDir": "dist",
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"target": "ES2022",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"esModuleInterop": true,
+		"resolveJsonModule": true
+	},
+	"include": ["**/*"],
+	"exclude": ["node_modules/*"]
+}

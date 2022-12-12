@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { Battle } from '../models/Battle.js'
+import { Battle } from '../../models/Battle.js'
 
-const missedBattleRouter = new Router()
+const missedBattleRouter = Router()
 
 missedBattleRouter.get('/', (req, res) => {
-	if (req.session.isLoggedIn) {
+	if (req.session.activeUser) {
 		res.render('missed-battle', { session: req.session })
 	} else {
 		res.redirect('/login')

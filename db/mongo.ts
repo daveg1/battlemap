@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { timestamp } from '../modules/timestamp.js'
 
-const uri = process.env.MONGO_URI
+const uri = process.env.MONGO_URI || ''
 
 export async function connectDB() {
 	try {

@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { User } from '../models/User.js'
+import { User } from '../../models/User.js'
 
-const signupRouter = new Router()
+const signupRouter = Router()
 
 signupRouter.get('/', (req, res) => {
-	if (req.session.isLoggedIn) {
+	if (req.session.activeUser) {
 		res.redirect('/')
 	}
 
