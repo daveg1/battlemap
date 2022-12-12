@@ -1,4 +1,6 @@
 import { Router } from 'express'
+import { User } from '../models/User.js'
+
 const signupRouter = new Router()
 
 signupRouter.get('/', (req, res) => {
@@ -14,28 +16,24 @@ signupRouter.post('/', async (req, res) => {
 		const { username, password } = req.body
 
 		const regex = new RegExp(username, 'i')
-		const find = await client
-			.collection('users')
-			.findOne({ username: { $regex: regex } }, { password: 0 })
+		const user = await User.findOne({ username: { $regex: regex } }, { password: 0 })
 
-		if (find) {
+		if (user) {
 			res.json({ status: 'bad', reason: 'A user with that name exists. Please choose another' })
 			return
 		}
 
-		const insert = await client.collection('users').insertOne({
+		const newUser = new User({
 			username,
 			password,
 			epithet: '',
 			fave_battles: [],
 		})
-		if (insert.insertedCount === 1) {
-			res.json({ status: 'good' })
-		} else {
-			res.json({ status: 'bad', message: 'Failed to create account' })
-		}
+
+		await newUser.save()
+		res.json({ status: 'good' })
 	} catch (error) {
-		res.json({ status: 'error', message: error.message })
+		res.json({ status: 'bad', message: 'Failed to create account' })
 	}
 })
 

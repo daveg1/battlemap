@@ -1,4 +1,6 @@
 import { Router } from 'express'
+import { Battle } from '../models/Battle.js'
+
 const missedBattleRouter = new Router()
 
 missedBattleRouter.get('/', (req, res) => {
@@ -11,7 +13,7 @@ missedBattleRouter.get('/', (req, res) => {
 
 missedBattleRouter.post('/', async (req, res) => {
 	try {
-		const inserted = await client.collection('battles').insertOne({
+		const battle = new Battle({
 			name: req.body.name,
 			article: req.body.article,
 			year: parseInt(req.body.year),
@@ -24,18 +26,13 @@ missedBattleRouter.post('/', async (req, res) => {
 			},
 		})
 
-		if (inserted && inserted.insertedCount === 1) {
-			res.json({
-				status: 'good',
-			})
-		} else {
-			res.json({
-				status: 'bad',
-				reason: 'failed to insert entry',
-			})
-		}
+		await battle.save()
+		res.json({ status: 'good' })
 	} catch (error) {
-		res.json({ status: 'error', message: error.message })
+		res.json({
+			status: 'bad',
+			reason: 'failed to insert entry',
+		})
 	}
 })
 

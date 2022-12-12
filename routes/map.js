@@ -52,12 +52,7 @@ mapRouter.post('/search-place', async (req, res) => {
 mapRouter.post('/search-battle', async (req, res) => {
 	try {
 		const regex = new RegExp(req.body.battle, 'i')
-		const results = await client
-			.collection('battles')
-			.find({
-				name: { $regex: regex },
-			})
-			.toArray()
+		const results = await Battle.find({ name: { $regex: regex } })
 
 		if (results.length) {
 			res.json({ status: 'good', results })
