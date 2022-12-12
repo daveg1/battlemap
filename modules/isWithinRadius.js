@@ -1,5 +1,4 @@
 import geolib from 'geolib'
-// const geolib = require('geolib');
 
 export function isWithinRadius(battleCoords, searchCoords, slider) {
 	if (
