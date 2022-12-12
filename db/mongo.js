@@ -1,4 +1,4 @@
-import mongoose, { mongo } from 'mongoose'
+import mongoose from 'mongoose'
 import { timestamp } from '../modules/timestamp.js'
 
 const uri = process.env.MONGO_URI
