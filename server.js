@@ -1,28 +1,22 @@
-// Modules
 import path from 'node:path'
 import express from 'express'
 import bodyParser from 'body-parser'
-import multer from 'multer'
 import session from 'express-session'
-
-const app = express()
-const upload = multer() // unused
-
-// Classes
-import { MongoClient } from 'mongodb' // update package to 4.0.0[-beta.3]
+import { MongoClient } from 'mongodb' // updated to v4.0.0[-beta.3]
 import { OpenCage } from './modules/OpenCage.js'
 import { isWithinRadius } from './modules/isWithinRadius.js'
 import { __dirname } from './modules/__dirname.js'
 import { router } from './routes.js'
 
-// Globals
-const PORT = process.env.PORT || 8080
-var db = null
+const app = express()
+let client = null
 
-// Express middleware
+// Server variables
+app.set('port', process.env.PORT || 8080)
 app.set('views', path.join(__dirname(import.meta.url), 'views'))
 app.set('view engine', 'ejs')
 
+// Server middleware
 app.use(
 	session({
 		secret: 'secret-key',
@@ -50,7 +44,7 @@ app.post('/map/search-place', async (req, res) => {
 		// Make sure coords were found
 		if (queryCoords) {
 			// Get the battles from the DB.
-			const battles = await db.collection('battles').find({}).toArray()
+			const battles = await client.collection('battles').find({}).toArray()
 			const searchResults = []
 
 			// Only grab the battles within the radius.
@@ -81,7 +75,7 @@ app.post('/map/search-place', async (req, res) => {
 app.post('/map/search-battle', async (req, res) => {
 	try {
 		const regex = new RegExp(req.body.battle, 'i')
-		const results = await db
+		const results = await client
 			.collection('battles')
 			.find({
 				name: { $regex: regex },
@@ -104,7 +98,7 @@ app.post('/login/attempt', async (req, res) => {
 	try {
 		// Use regex for case-insensitive string matching.
 		const regex = new RegExp(req.body.username, 'i')
-		const user = await db.collection('users').findOne(
+		const user = await client.collection('users').findOne(
 			{
 				username: { $regex: regex },
 				password: req.body.password,
@@ -127,7 +121,7 @@ app.post('/login/attempt', async (req, res) => {
 // Insert missed battle
 app.post('/missed-battle', async (req, res) => {
 	try {
-		const inserted = await db.collection('battles').insertOne({
+		const inserted = await client.collection('battles').insertOne({
 			name: req.body.name,
 			article: req.body.article,
 			year: parseInt(req.body.year),
@@ -163,7 +157,7 @@ app.get('/profile/edit', async (req, res) => {
 		}
 
 		const username = req.session.username
-		const profile = await db.collection('users').findOne(
+		const profile = await client.collection('users').findOne(
 			// search for the user
 			{ username },
 			// exclude their password
@@ -185,7 +179,7 @@ app.post('/profile/edit', async (req, res) => {
 		const epithet = req.body.epithet
 		const username = req.session.username
 
-		const update = await db.collection('users').updateOne(
+		const update = await client.collection('users').updateOne(
 			// WHERE username = username
 			{ username },
 			{ $set: { epithet } },
@@ -207,13 +201,13 @@ app.get('/profile/:username', async (req, res) => {
 		const regex = new RegExp(req.params.username, 'i')
 
 		const results = await Promise.all([
-			db.collection('users').findOne(
+			client.collection('users').findOne(
 				// search for the user
 				{ username: { $regex: regex } },
 				// exclude their password
 				{ password: 0 },
 			),
-			db
+			client
 				.collection('user_comments')
 				.find(
 					// match the comments for the user
@@ -240,7 +234,7 @@ app.get('/profile/:username', async (req, res) => {
 // Insert a comment
 app.post('/profile/add-comment', async (req, res) => {
 	try {
-		await db.collection('user_comments').insertOne({
+		await client.collection('user_comments').insertOne({
 			content: req.body.content,
 			author: req.body.author,
 			profile: req.body.profile,
@@ -263,7 +257,7 @@ app.post('/profile/save-battle', async (req, res) => {
 		const article = req.body.article
 
 		// Attempt to find the battle
-		const user = await db.collection('users').findOne({
+		const user = await client.collection('users').findOne({
 			username: req.session.username,
 			'fave_battles.name': name,
 		})
@@ -274,7 +268,7 @@ app.post('/profile/save-battle', async (req, res) => {
 		}
 
 		// Save the battle to the list
-		await db.collection('users').updateOne(
+		await client.collection('users').updateOne(
 			{ username: req.session.username },
 			{
 				$push: {
@@ -296,7 +290,7 @@ app.post('/profile/save-battle', async (req, res) => {
 app.post('/user-search', async (req, res) => {
 	try {
 		const regex = new RegExp('^' + req.body.term, 'i')
-		const results = await db
+		const results = await client
 			.collection('users')
 			.find({ username: { $regex: regex } }, { password: 0, epithet: 0 })
 			.toArray()
@@ -312,7 +306,7 @@ app.post('/signup', async (req, res) => {
 		const { username, password } = req.body
 
 		const regex = new RegExp(username, 'i')
-		const find = await db
+		const find = await client
 			.collection('users')
 			.findOne({ username: { $regex: regex } }, { password: 0 })
 
@@ -321,7 +315,7 @@ app.post('/signup', async (req, res) => {
 			return
 		}
 
-		const insert = await db.collection('users').insertOne({
+		const insert = await client.collection('users').insertOne({
 			username,
 			password,
 			epithet: '',
@@ -338,16 +332,17 @@ app.post('/signup', async (req, res) => {
 })
 
 // 404 route
-app.use((req, res, next) => {
+app.use((req, res) => {
 	res.render('404', { session: req.session })
 })
 
 // Create database connection
-MongoClient.connect('mongodb://localhost:27017/battlemap', (err, database) => {
-	if (err) throw err
-
-	db = database
-
-	// If no errors, start the web server.
-	app.listen(PORT, () => console.log(`Live at http://localhost:${PORT}/`))
-})
+MongoClient.connect('mongodb://localhost:27017/battlemap')
+	.then((client) => {
+		// If no errors, assign db and start server
+		client = client
+		app.listen(app.get('port'), () => console.log(`Live at http://localhost:${app.get('port')}/`))
+	})
+	.catch((error) => {
+		throw error
+	})
