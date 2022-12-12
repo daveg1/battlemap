@@ -4,7 +4,7 @@ This is a modernised version of the [BattleMap](https://github.com/daveg1/battle
 
 The original version has been tagged as v1.0. Run `git show v1.0` to see more information.
 
-This project converts the old Express-Mongo-jQuery stack into x-y-z-typescript.
+This project converts the old Express-Mongo-jQuery stack into Express-Mongoose-x-typescript.
 
 See the old project linked above for the full credits.
 
