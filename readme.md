@@ -9,6 +9,7 @@ This project converts the old Express-Mongo-jQuery stack into Express-Mongoose-x
 See the old project linked above for the full credits.
 
 ## Instructions for running
+
 1. `npm i`
 2. `cd public/json`
 3. `mongoimport --db=battlemap --collection=battles --file=battles.json --jsonArray`

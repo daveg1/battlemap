@@ -1,48 +1,48 @@
-async function grabArticle(articleURL){
-    const articleTitle = articleURL
-        .split('/') // split the url
-        .pop() // get the last segment
-        .replace(/ /g, '_') // format the title
-    
-    const queryURL = `https://en.wikipedia.org/w/api.php?action=query&titles=${articleTitle}&prop=extracts|pageimages&format=json&exintro=1&pithumbsize=250&origin=*`;
-    const query = await fetch(queryURL)
-    const results = await query.json()
+async function grabArticle(articleURL) {
+	const articleTitle = articleURL
+		.split('/') // split the url
+		.pop() // get the last segment
+		.replace(/ /g, '_') // format the title
 
-    if(!results.query){
-        return;
-    }
+	const queryURL = `https://en.wikipedia.org/w/api.php?action=query&titles=${articleTitle}&prop=extracts|pageimages&format=json&exintro=1&pithumbsize=250&origin=*`
+	const query = await fetch(queryURL)
+	const results = await query.json()
 
-    const data = Object.values(results.query.pages).shift();
-    const { title, thumbnail } = data;
-    // Parse html with jQuery
-    const page = $(data.extract);
+	if (!results.query) {
+		return
+	}
 
-    const article = {
-        title,
-        html: page
-    }
+	const data = Object.values(results.query.pages).shift()
+	const { title, thumbnail } = data
+	// Parse html with jQuery
+	const page = $(data.extract)
 
-    if(thumbnail){
-        article.img = thumbnail.source
-    }
+	const article = {
+		title,
+		html: page,
+	}
 
-    // Return our formatted response.
-    return article
+	if (thumbnail) {
+		article.img = thumbnail.source
+	}
+
+	// Return our formatted response.
+	return article
 }
 
-function closePopup(){
-    $('#article-preview').removeClass('visible');
+function closePopup() {
+	$('#article-preview').removeClass('visible')
 }
 
-async function openArticlePreview(articleURL){
-    try {
-        const article = await grabArticle(articleURL)
+async function openArticlePreview(articleURL) {
+	try {
+		const article = await grabArticle(articleURL)
 
-        if(!article){
-            return;
-        }
+		if (!article) {
+			return
+		}
 
-        $('#article-preview').html(`
+		$('#article-preview').html(`
         <button id="article-preview-close" onclick="closePopup()">X</button>
         <header>
             <div class="header-image" style="background-image: url(${article.img})"></div>
@@ -54,12 +54,12 @@ async function openArticlePreview(articleURL){
         </footer>
         `)
 
-        $('#article-preview-content').html(article.html)
+		$('#article-preview-content').html(article.html)
 
-        // Once set up, make interactable and animate the popup.
-        $('#article-preview').addClass('visible');
-    // $('#article-preview').animate({opacity: 1});
-    } catch(error){
-        console.error(error)
-    }
+		// Once set up, make interactable and animate the popup.
+		$('#article-preview').addClass('visible')
+		// $('#article-preview').animate({opacity: 1});
+	} catch (error) {
+		console.error(error)
+	}
 }
