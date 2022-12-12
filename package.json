@@ -5,8 +5,8 @@
 	"main": "server.js",
 	"type": "module",
 	"scripts": {
-		"start": "node dist/server.js",
-		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
+		"start": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
+		"prod": "node dist/server.js",
 		"build": "yarn clean & tsc & yarn copy-static",
 		"clean": "rimraf dist",
 		"copy-static": "copyfiles -u 1 src/public/**/* dist & copyfiles -u 1 src/views/**/* dist",

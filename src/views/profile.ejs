@@ -29,11 +29,11 @@
             </section>
             <section class="profile-comments">
                 <h2>Comments</h2>
-                <% if(locals.session && session.isLoggedIn){ %>
+                <% if(locals.session && session.activeUser){ %>
                 <form class="profile-comments-form" action="/profile/add-comment" method="POST">
                     <textarea name="content" placeholder="Add a comment" required maxlength="500"></textarea>
                     <input type="hidden" name="profile" value="<%= profile.username %>">
-                    <input type="hidden" name="author" value="<%= session.username %>">
+                    <input type="hidden" name="author" value="<%= session.activeUser.username %>">
                     <div class="button-holder">
                         <button>Post Comment</button>
                     </div>
