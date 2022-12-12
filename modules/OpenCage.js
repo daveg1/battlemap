@@ -1,11 +1,11 @@
 import superagent from 'superagent'
-import { OPENCAGE_API_TOKEN } from '../config/index.js'
+const apiToken = process.env.OPENCAGE_API_TOKEN
 
 export async function OpenCage(place) {
 	const baseURL = 'https://api.opencagedata.com/geocode/v1/json'
 	const querystring = {
 		q: place,
-		key: OPENCAGE_API_TOKEN,
+		key: apiToken,
 		bounds: '-10.72266,34.19817,50.66895,71.21608',
 		limit: 1,
 	}
