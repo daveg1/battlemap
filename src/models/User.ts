@@ -15,7 +15,7 @@ export interface IUser {
 const schema = new Schema<IUser>({
 	username: { type: String, required: true },
 	password: { type: String, required: true },
-	epithet: { type: String, required: true },
+	epithet: { type: String },
 	fave_battles: [
 		{
 			name: { type: String, required: true },

@@ -19,6 +19,7 @@ signupRouter.post('/', async (req, res) => {
 		const user = await User.findOne({ username: { $regex: regex } }, { password: 0 })
 
 		if (user) {
+			console.log('Has user')
 			res.json({ status: 'bad', reason: 'A user with that name exists. Please choose another' })
 			return
 		}
@@ -33,6 +34,7 @@ signupRouter.post('/', async (req, res) => {
 		await newUser.save()
 		res.json({ status: 'good' })
 	} catch (error) {
+		console.log(error)
 		res.json({ status: 'bad', message: 'Failed to create account' })
 	}
 })
