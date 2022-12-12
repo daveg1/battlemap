@@ -1,4 +1,7 @@
 import { Router } from 'express'
+import { User } from '../models/User.js'
+import { Comment } from '../models/Comment.js'
+
 const profileRouter = Router()
 
 profileRouter.get('/', (req, res) => {
@@ -22,7 +25,7 @@ profileRouter.get('/edit', async (req, res) => {
 		}
 
 		const username = req.session.username
-		const profile = await client.collection('users').findOne(
+		const profile = await User.findOne(
 			// search for the user
 			{ username },
 			// exclude their password
@@ -30,12 +33,13 @@ profileRouter.get('/edit', async (req, res) => {
 		)
 
 		if (profile) {
-			res.render('edit-profile', { profile, session })
+			res.render('edit-profile', { profile, session: req.session })
 		} else {
 			res.redirect('/login')
 		}
 	} catch (error) {
-		res.json({ status: 'error', message: error.message })
+		console.error(error)
+		res.json({ status: 'error', message: 'Error loading edit' })
 	}
 })
 
@@ -44,7 +48,7 @@ profileRouter.post('/edit', async (req, res) => {
 		const epithet = req.body.epithet
 		const username = req.session.username
 
-		const update = await client.collection('users').updateOne(
+		const update = await User.updateOne(
 			// WHERE username = username
 			{ username },
 			{ $set: { epithet } },
@@ -66,21 +70,18 @@ profileRouter.get('/:username', async (req, res) => {
 		const regex = new RegExp(req.params.username, 'i')
 
 		const results = await Promise.all([
-			client.collection('users').findOne(
+			User.findOne(
 				// search for the user
 				{ username: { $regex: regex } },
 				// exclude their password
 				{ password: 0 },
 			),
-			client
-				.collection('user_comments')
-				.find(
-					// match the comments for the user
-					{ profile: { $regex: regex } },
-					// exclude the profile field
-					{ profile: 0 },
-				)
-				.toArray(),
+			Comment.find(
+				// match the comments for the user
+				{ profile: { $regex: regex } },
+				// exclude the profile field
+				{ profile: 0 },
+			),
 		])
 
 		const [profile, comments] = results
@@ -92,23 +93,26 @@ profileRouter.get('/:username', async (req, res) => {
 			res.render('profile', { session })
 		}
 	} catch (error) {
-		res.json({ status: 'error', message: error.message })
+		console.error(error)
+		res.json({ status: 'error', message: 'Error loading profile' })
 	}
 })
 
 // Insert a comment
 profileRouter.post('/add-comment', async (req, res) => {
 	try {
-		await client.collection('user_comments').insertOne({
+		const comment = new Comment({
 			content: req.body.content,
 			author: req.body.author,
 			profile: req.body.profile,
-			date: Date.now(),
+			date: new Date(),
 		})
+
+		await comment.save()
+		res.redirect(`/profile/${req.body.profile}`)
 	} catch (error) {
 		res.redirect('error', { message: error.message })
 	}
-	res.redirect(`/profile/${req.body.profile}`)
 })
 
 profileRouter.post('/save-battle', async (req, res) => {
@@ -122,7 +126,7 @@ profileRouter.post('/save-battle', async (req, res) => {
 		const article = req.body.article
 
 		// Attempt to find the battle
-		const user = await client.collection('users').findOne({
+		const user = await User.findOne({
 			username: req.session.username,
 			'fave_battles.name': name,
 		})
@@ -133,7 +137,7 @@ profileRouter.post('/save-battle', async (req, res) => {
 		}
 
 		// Save the battle to the list
-		await client.collection('users').updateOne(
+		await User.updateOne(
 			{ username: req.session.username },
 			{
 				$push: {

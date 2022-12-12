@@ -8,7 +8,7 @@ function handleSubmit(e) {
 		password: this.password.value,
 	}
 
-	post('/login/attempt', data)
+	post('/login', data)
 		.then((res) => {
 			if (res.status === 'good') {
 				window.location.href = '/profile/me'
