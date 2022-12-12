@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 // Server routes
-app.use('/', router)
+app.use(router)
 
 connectDB().then(() => {
 	app.listen(app.get('port'), () => {

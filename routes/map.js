@@ -43,6 +43,7 @@ mapRouter.post('/search-place', async (req, res) => {
 	} catch (error) {
 		// Return json response with error message
 		res.json({ status: 'error', message: error.message })
+		console.error(error)
 	}
 })
 

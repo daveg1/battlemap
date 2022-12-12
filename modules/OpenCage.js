@@ -1,11 +1,11 @@
 import superagent from 'superagent'
-const apiToken = process.env.OPENCAGE_API_TOKEN
+const key = process.env.OPENCAGE_API_TOKEN
 
 export async function OpenCage(place) {
 	const baseURL = 'https://api.opencagedata.com/geocode/v1/json'
 	const querystring = {
 		q: place,
-		key: apiToken,
+		key,
 		bounds: '-10.72266,34.19817,50.66895,71.21608',
 		limit: 1,
 	}
@@ -15,8 +15,8 @@ export async function OpenCage(place) {
 	try {
 		const res = await superagent.get(baseURL).query(querystring)
 		results = res.body.results
-	} catch (e) {
-		throw new Error('OpenCage: ' + e.message)
+	} catch (error) {
+		console.error('OpenCage API error')
 	}
 
 	// Get the first result.
