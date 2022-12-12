@@ -1,4 +1,4 @@
-![BattleMap](./public/images/logo.png)
+![BattleMap](./src/public/images/logo.png)
 
 This is a modernised version of the [BattleMap](https://github.com/daveg1/battlemap) project I worked on in Year 2 at University.
 
