@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { getCoords } from '../../modules/OpenCage.js'
-import { Battle, IBattle } from '../../models/Battle.js'
+import { getCoords } from '../modules/OpenCage.js'
+import { Battle, IBattle } from '../models/Battle.js'
 import { isPointWithinRadius } from 'geolib'
 
 const mapRouter = Router()
@@ -24,7 +24,7 @@ mapRouter.post('/search-place', async (req, res) => {
 			const searchResults: IBattle[] = []
 
 			// Only grab the battles within the radius.
-			battles.forEach((battle) => {
+			battles.forEach((battle: IBattle) => {
 				if (
 					isPointWithinRadius(
 						{ latitude: battle.coords.lat, longitude: battle.coords.lng },

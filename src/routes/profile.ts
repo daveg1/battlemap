@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { User } from '../../models/User.js'
-import { Comment } from '../../models/Comment.js'
+import { User } from '../models/User.js'
+import { Comment } from '../models/Comment.js'
 
 const profileRouter = Router()
 

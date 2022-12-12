@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { Battle } from '../../models/Battle.js'
+import { Battle } from '../models/Battle.js'
 
 const missedBattleRouter = Router()
 

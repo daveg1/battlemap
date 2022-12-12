@@ -3,10 +3,10 @@ import path from 'node:path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import session from 'express-session'
-import { __dirname } from '../modules/__dirname.js'
+import { __dirname } from './modules/__dirname.js'
 import { router } from './routes/index.js'
-import { connectDB } from '../db/mongo.js'
-import { timestamp } from '../modules/timestamp.js'
+import { connectDB } from './db/mongo.js'
+import { timestamp } from './modules/timestamp.js'
 
 const app = express()
 
