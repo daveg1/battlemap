@@ -9,16 +9,6 @@ baseRouter.get('/about', (req, res) => {
 	res.render('about', { session: req.session })
 })
 
-baseRouter.get('/login', (req, res) => {
-	console.log(req.session)
-
-	if (req.session.isLoggedIn) {
-		res.redirect(`/profile/${req.session.username}`)
-	} else {
-		res.render('login', { session: req.session })
-	}
-})
-
 baseRouter.get('/logout', (req, res) => {
 	if (req.session.isLoggedIn) {
 		delete req.session.isLoggedIn
@@ -28,20 +18,18 @@ baseRouter.get('/logout', (req, res) => {
 	res.redirect('/login')
 })
 
-baseRouter.get('/missed-battle', (req, res) => {
-	if (req.session.isLoggedIn) {
-		res.render('missed-battle', { session: req.session })
-	} else {
-		res.redirect('/login')
+// Users search (from navbar)
+baseRouter.post('/user-search', async (req, res) => {
+	try {
+		const regex = new RegExp('^' + req.body.term, 'i')
+		const results = await client
+			.collection('users')
+			.find({ username: { $regex: regex } }, { password: 0, epithet: 0 })
+			.toArray()
+		res.json({ status: 'success', results })
+	} catch (error) {
+		res.json({ status: 'error', message: error.message })
 	}
-})
-
-baseRouter.get('/signup', (req, res) => {
-	if (req.session.isLoggedIn) {
-		res.redirect('/')
-	}
-
-	res.render('signup', { session: req.session })
 })
 
 export { baseRouter }
