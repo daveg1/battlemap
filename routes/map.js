@@ -1,5 +1,7 @@
 import { Router } from 'express'
-import { OpenCage } from '../modules/OpenCage.js'
+import { getCoords } from '../modules/OpenCage.js'
+import { Battle } from '../models/Battle.js'
+import { isWithinRadius } from '../modules/isWithinRadius.js'
 
 const mapRouter = Router()
 
@@ -13,12 +15,12 @@ mapRouter.post('/search-place', async (req, res) => {
 		const { place, radius } = req.body
 
 		// Find the coords of the place name input.
-		const queryCoords = await OpenCage(place)
+		const queryCoords = await getCoords(place)
 
 		// Make sure coords were found
 		if (queryCoords) {
 			// Get the battles from the DB.
-			const battles = await client.collection('battles').find({}).toArray()
+			const battles = await Battle.find()
 			const searchResults = []
 
 			// Only grab the battles within the radius.

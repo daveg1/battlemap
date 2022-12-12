@@ -1,11 +1,11 @@
 import geolib from 'geolib'
 
-export function isWithinRadius(battleCoords, searchCoords, slider) {
+export function isWithinRadius(battleCoords, searchCoords, radius) {
 	if (
 		geolib.isPointWithinRadius(
 			{ latitude: battleCoords.lat, longitude: battleCoords.lng },
 			{ latitude: searchCoords.lat, longitude: searchCoords.lng },
-			slider,
+			radius,
 		)
 	) {
 		return true

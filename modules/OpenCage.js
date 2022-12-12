@@ -1,7 +1,7 @@
 import superagent from 'superagent'
 const key = process.env.OPENCAGE_API_TOKEN
 
-export async function OpenCage(place) {
+export async function getCoords(place) {
 	const baseURL = 'https://api.opencagedata.com/geocode/v1/json'
 	const querystring = {
 		q: place,
