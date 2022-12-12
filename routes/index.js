@@ -5,7 +5,7 @@ import { mapRouter } from './map.js'
 import { missedBattleRouter } from './missedBattle.js'
 import { signupRouter } from './signup.js'
 import { profileRouter } from './profile.js'
-import mapData from '../public/json/europe.json' assert { type: 'json' }
+import mapData from '../data/europe.json' assert { type: 'json' }
 
 const router = Router()
 
@@ -17,7 +17,7 @@ router.use('/profile', profileRouter) // Profile
 router.use('/signup', signupRouter) // Signup
 
 // TODO Update to /map/data
-router.get('/map-data/', (req, res) => {
+router.get('/map-data', (req, res) => {
 	res.json(mapData)
 })
 

@@ -118,8 +118,7 @@ $(document).ready(async function () {
 	initialiseTiles()
 
 	// Grab our GeoJSON
-	const response = await fetch('/json/europe.json')
-	const geoJSON = await response.json()
+	const geoJSON = await (await fetch('/map-data')).json()
 
 	// Country outline styling
 	const style = {
