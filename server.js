@@ -6,7 +6,7 @@ import { MongoClient } from 'mongodb' // updated to v4.0.0[-beta.3]
 import { OpenCage } from './modules/OpenCage.js'
 import { isWithinRadius } from './modules/isWithinRadius.js'
 import { __dirname } from './modules/__dirname.js'
-import { router } from './routes.js'
+import { router } from './routes/index.js'
 
 const app = express()
 let client = null
