@@ -5,11 +5,11 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js",
+    "start": "nodemon server.js",
     "prod": "node server.js"
   },
   "keywords": [],
-  "author": "David Graham, 1911734; Simonas Lynikas, 1912153; Calum Marr, 1901846; Brodie Dack, 1901361",
+  "author": "David Graham",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
