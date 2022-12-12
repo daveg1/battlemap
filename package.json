@@ -5,9 +5,11 @@
 	"main": "server.js",
 	"type": "module",
 	"scripts": {
-		"start": "nodemon ./src/server.ts",
-		"build": "tsc",
-		"prod": "node dist/server.js",
+		"start": "node dist/server.js",
+		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
+		"build": "yarn clean & tsc & yarn copy-static",
+		"clean": "rimraf dist",
+		"copy-static": "copyfiles -u 1 src/public/**/* dist & copyfiles -u 1 src/views/**/* dist",
 		"format": "prettier --write src/",
 		"format:check": "prettier --check src/"
 	},
@@ -32,8 +34,10 @@
 		"@types/node": "^18.11.13",
 		"@types/superagent": "^4.1.16",
 		"concurrently": "^7.6.0",
+		"copyfiles": "^2.4.1",
 		"nodemon": "^2.0.20",
 		"prettier": "^2.8.1",
+		"rimraf": "^3.0.2",
 		"ts-node": "^10.9.1"
 	}
 }
