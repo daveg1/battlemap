@@ -15,7 +15,7 @@ const baseDir = __dirname(import.meta.url)
 // Server variables
 app.set('port', process.env.PORT || 8080)
 app.set('views', path.join(baseDir, 'views'))
-app.set('view engine', 'ejs')
+app.set('view engine', 'pug')
 
 // Server middleware
 app.use(express.json())

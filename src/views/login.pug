@@ -1,0 +1,38 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		title BattleMap - Signin
+		include includes/styles.pug
+		link(rel="stylesheet", href="/styles/form.css")
+	body
+		div.vignette
+		include includes/navbar.pug
+		main.wrap.form-container
+			form#login-form.form(action="", method="post")
+				h2 Sign in
+				section.split
+					div
+						h3
+							label.label(for="username") Username
+						input#username(type="text", name="username", placeholder="username", maxlength="32", autofocus, required)
+
+					div
+						h3
+							label.label(for="password") Password
+						input#password(type="text", name="password", placeholder="••••••••", required)
+
+				section.split
+					p Not a member?
+						a(href="/signup") Create an account
+
+					div.button-holder
+						button.button Sign in
+
+				p
+					output#output
+
+		include includes/scripts.pug
+		script(src="/scripts/login.js")

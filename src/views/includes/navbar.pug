@@ -1,0 +1,40 @@
+- var isActive = locals.session && session.activeUser
+
+//- locals.isfloat header.navbar.float
+header.navbar
+	.navbar-container
+		a.navbar-logo(href="/")
+			img(src="/images/logo.png", alt="BattleMap", height="38")
+
+		nav.navbar-links
+			ul
+				li
+					a(href="/") Home
+				li
+					a(href="/map") Map
+				li
+					a(href="/about") About
+				if isActive
+					li
+						a(href="/missed-battle") Missed Battle
+
+			.navbar-user-search
+				form.user-search-form(autocomplete="off", spellcheck="false")
+					input#user-search(type="text", placeholder="🔍 Search for User")
+					div#user-search-results.user-search-results
+
+			ul
+				if isActive
+					li
+						i Ahoy,
+							a(href="/profile/me")= session.activeUser.username
+					li &bull;
+					li
+						a(href="/logout") Logout
+				else
+					li
+						a(href="/login") Login
+					li
+						a(href="/signup") Sign Up
+
+	script(src="/scripts/user-search.js")

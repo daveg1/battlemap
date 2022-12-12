@@ -1,0 +1,98 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		title BattleMap - Submit Missing Battle
+		include includes/styles.pug
+	body
+		include includes/navbar.pug
+		main.wrap
+			h1 Missed Battle
+			p Think we missed a battle? Use the form below to make a new entry to the database!
+
+			form#battle-submit-form(action="", method="post", autocomplete="off", spellcheck="false")
+				div.split
+					div
+						section
+							h3
+								label.label(for="name") Name
+							input#name(type="text", name="name", placeholder="Battle of Berlin*", required)
+							p
+								small * siege, ambush, assault, etc. all count too
+
+						section
+							h3
+								label.label(for="article") Article URL
+							input#article(
+									type="url",
+									name="article",
+									placeholder="https://en.wikipedia.com/wiki/Battle_of_Berlin" size="35",
+									required)
+
+						section
+							h3
+								label.label(for="year") Year
+								input#year(
+									type="number",
+									name="year",
+									placeholder="1945",
+									min="0",
+									max="2021",
+									required)
+
+						section
+							h3 Coords
+							input(
+								type="number",
+								id="lat",
+								name="lat",
+								placeholder="latitude",
+								required)
+							input(
+								type="number",
+								id="lng",
+								name="lng",
+								placeholder="longitude",
+								required)
+
+
+					div
+						section
+							h3
+								label.label(for="place") Place
+							input#place(
+								type="text",
+								name="place",
+								placeholder="Berlin",
+								required)
+
+						section
+							h3
+								label.label(for="country") Country
+								input#country(
+									type="text",
+									name="country",
+									placeholder="Germany",
+									required)
+
+						section
+							h3
+								label.label(for="war") War or Campaign
+								input#war(
+									type="text",
+									name="war",
+									placeholder="World War II",
+									required)
+								p
+									small Preferrably identify the war this battle took place during.
+
+				div.button-holder
+					button.button Submit
+					button.button(type="reset") Reset
+
+				div#output
+
+		include includes/scripts.pug
+		script(src="/scripts/missed-battle.js")
