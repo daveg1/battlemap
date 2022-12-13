@@ -1,10 +1,8 @@
 ![BattleMap](./src/public/images/logo.png)
 
-BattleMap is a fun tool that maps historical European battles.
+BattleMap is a fun tool that maps historical European battles. Search for a place name and BattleMap will plot all the battles that have occurred in the surrounding region.
 
-You enter a place name and BattleMap plots all battles that have occurred in within a given-mile radius.
-
-**Versions**
+### Versions
 - Original submission ([v1.0](https://github.com/daveg1/battlemap/tree/v1.0))
 - Upgrade backend to TypeScript ([v2.0](https://github.com/daveg1/battlemap/tree/v2.0))
 
