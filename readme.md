@@ -1,21 +1,24 @@
-![BattleMap](./public/images/logo.png)
+![BattleMap](./src/public/images/logo.png)
 
-A project for CM2104
+This is a modernised version of the [BattleMap](https://github.com/daveg1/battlemap) project I worked on in Year 2 at University.
 
-## Poogtastic is...
-Name | Link | Matric. |
----- | ---- | ------- | 
-David Graham | [daveg1](https://github.com/daveg1) | 1911734 |
-Simonas Lynikas | [YourRentIsDue](https://github.com/YourRentIsDue) | 1912153 |
-Calum Marr | [cazzy2812](https://github.com/cazzy2812) | 1901846 |
-Brodie Dack | [KuroUrbana](https://github.com/KuroUrbana) | 1901361 |
+The original submission has been tagged as [v1.0](https://github.com/daveg1/battlemap/tree/v1.0).
 
 ## Instructions for running
+
 1. `npm i`
 2. `cd public/json`
 3. `mongoimport --db=battlemap --collection=battles --file=battles.json --jsonArray`
 4. `cd ../..`
 5. `npm start`
+
+## Poogtastic is...
+Name | Link | Matric. |
+---- | ---- | ------- |
+David Graham | [daveg1](https://github.com/daveg1) | 1911734 |
+Simonas Lynikas | [YourRentIsDue](https://github.com/YourRentIsDue) | 1912153 |
+Calum Marr | [cazzy2812](https://github.com/cazzy2812) | 1901846 |
+Brodie Dack | [KuroUrbana](https://github.com/KuroUrbana) | 1901361 |
 
 ## Asset Credits
 Asset | Site |

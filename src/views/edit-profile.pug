@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		title BattleMap - Edit Profile
+		include includes/styles.pug
+	body
+			include includes/navbar.pug
+			main.wrap
+				h1 Edit Profile
+				form#edit-profile-form(action="" method="post")
+					section
+						h3
+							label.label(for="epithet") Change epithet
+						input#epithet(type="text", name="epithet", value=profile.epithet, placeholder="epithet (nickname)")
+
+					p
+						button.button Save
+
+				div#output
+			include includes/scripts.pug
+			script(src="/scripts/edit-profile.js")
