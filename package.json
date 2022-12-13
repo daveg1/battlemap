@@ -17,6 +17,24 @@
 	},
 	"keywords": [],
 	"author": "David Graham",
+	"contributors": [
+		{
+			"name": "David Graham",
+			"url": "https://github.com/daveg1"
+		},
+		{
+			"name": "Simonas Lynikas",
+			"url": "https://github.com/YourRentIsDue"
+		},
+		{
+			"name": "Calum Marr",
+			"url": "https://github.com/cazzy2812"
+		},
+		{
+			"name": "Brodie Dack",
+			"url": "https://github.com/KuroUrbana"
+		}
+	],
 	"license": "ISC",
 	"dependencies": {
 		"body-parser": "^1.19.0",
