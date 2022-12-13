@@ -34,13 +34,13 @@ html(lang="en")
 						section
 							h3
 								label.label(for="year") Year
-								input#year(
-									type="number",
-									name="year",
-									placeholder="1945",
-									min="0",
-									max="2021",
-									required)
+							input#year(
+								type="number",
+								name="year",
+								placeholder="1945",
+								min="0",
+								max="2021",
+								required)
 
 						section
 							h3 Coords
@@ -50,6 +50,7 @@ html(lang="en")
 								name="lat",
 								placeholder="latitude",
 								required)
+
 							input(
 								type="number",
 								id="lng",
@@ -71,22 +72,22 @@ html(lang="en")
 						section
 							h3
 								label.label(for="country") Country
-								input#country(
-									type="text",
-									name="country",
-									placeholder="Germany",
-									required)
+							input#country(
+								type="text",
+								name="country",
+								placeholder="Germany",
+								required)
 
 						section
 							h3
 								label.label(for="war") War or Campaign
-								input#war(
-									type="text",
-									name="war",
-									placeholder="World War II",
-									required)
-								p
-									small Preferrably identify the war this battle took place during.
+							input#war(
+								type="text",
+								name="war",
+								placeholder="World War II",
+								required)
+							p
+								small Preferrably identify the war this battle took place during.
 
 				div.button-holder
 					button.button Submit
