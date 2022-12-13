@@ -39,7 +39,7 @@ app.use(express.static(path.join(baseDir, 'public')))
 if (process.env.SESSION_SECRET) {
 	app.use(
 		session({
-			secret: process.env.SESSION_SECRET!,
+			secret: process.env.SESSION_SECRET,
 			resave: false,
 			saveUninitialized: false,
 		}),
