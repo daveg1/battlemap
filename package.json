@@ -1,6 +1,6 @@
 {
 	"name": "battlemap",
-	"version": "1.0.0",
+	"version": "2.1.0",
 	"description": "A tool that maps the battles throughout European history.",
 	"main": "server.js",
 	"type": "module",
