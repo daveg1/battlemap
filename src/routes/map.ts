@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getCoords } from '../modules/OpenCage.js'
+import { getCoords } from '../modules/getCoords.js'
 import { Battle, IBattle } from '../models/Battle.js'
 import { isPointWithinRadius } from 'geolib'
 
