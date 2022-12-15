@@ -6,7 +6,7 @@ import helmet from 'helmet'
 import session from 'express-session'
 import { __dirname } from './modules/__dirname.js'
 import { router } from './routes/index.js'
-import { connectDB } from './db/connectDB.js'
+import { connectDB } from './modules/connectDB.js'
 import { timestamp } from './modules/timestamp.js'
 import { IActiveUser } from './interfaces/ActiveUser.js'
 

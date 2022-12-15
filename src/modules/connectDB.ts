@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { timestamp } from '../modules/timestamp.js'
+import { timestamp } from './timestamp.js'
 
 export async function connectDB() {
 	try {
